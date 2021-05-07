@@ -34,7 +34,10 @@ namespace MyFirstApi.Controllers
             return user;
         }
 
+        [HttpPost("Login")]
+        public async Task<ActionResult<AppUser>> LoginAsync(LoginDTO dto)
+        {
 
-
+        }
     }
 }

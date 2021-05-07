@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyFirstApi.DTO
 {
-    public class RegisterDTO
+    public class LoginDTO
     {
         //can't be empty => required
         [Required]
