@@ -48,11 +48,14 @@ namespace MyFirstApi.Services
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-            if (hash != user.PasswordHash)
+            for (int i = 0; i < hash.Length; i++)
             {
-                throw new UnauthorizedAccessException("Invalid password.");
+                if (hash[i] != user.PasswordHash[i])
+                            {
+                                throw new UnauthorizedAccessException("Invalid password.");
+                            }
             }
+            
 
             return user;
         }
