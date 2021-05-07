@@ -46,7 +46,7 @@ namespace MyFirstApi.Services
                 throw new UnauthorizedAccessException("Invalid username.");
             }
 
-            using var hmac = new HMACSHA512();
+            using var hmac = new HMACSHA512(user.PasswordSalt);
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
 
             if (hash != user.PasswordHash)
