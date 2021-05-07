@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyFirstApi.DTO;
 using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace MyFirstApi.Controllers
 
         [HttpPost("Register")]
 
-        public async Task<AppUser> RegisterAsync(string name, string password)
+        public async Task<AppUser> RegisterAsync(RegisterDTO dto)
         {
-            var user = await _service.RegisterAsync(name, password);
+            var user = await _service.RegisterAsync(dto.Name, dto.Password);
             return user;
         }
 
