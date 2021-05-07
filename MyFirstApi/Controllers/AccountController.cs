@@ -22,9 +22,13 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpPost("Register")]
-
-        public async Task<AppUser> RegisterAsync(RegisterDTO dto)
+        //ActionResult, gives you a non-generic result
+        public async Task<ActionResult<AppUser>> RegisterAsync(RegisterDTO dto)
         {
+            if (await _service.UserExists(dto.Name))
+            {
+
+            }
             var user = await _service.RegisterAsync(dto.Name, dto.Password);
             return user;
         }
