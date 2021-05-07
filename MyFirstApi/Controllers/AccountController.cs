@@ -28,7 +28,7 @@ namespace MyFirstApi.Controllers
             if (await _service.UserExists(dto.Name))
             {
                 //BadRequest is a part of ActionResult
-                return BadRequest("Username already exists");
+                return BadRequest("Username already exists.");
             }
             var user = await _service.RegisterAsync(dto.Name, dto.Password);
             return user;
@@ -37,13 +37,21 @@ namespace MyFirstApi.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<AppUser>> LoginAsync(LoginDTO dto)
         {
-            if (!await _service.UserExists(dto.Name))
+            //this happens in AccountService, so not needed anymore
+            //if (!await _service.UserExists(dto.Name))
+            //{
+            //    return Unauthorized("Invalid username.");
+            //}
+            try
             {
-                return Unauthorized("This username does not exist");
+                AppUser user = await _service.LoginAsync(dto.Name, dto.Password);
+                return user;
             }
-            var user = await _service.LoginAsync(dto.Name, dto.Password);
-
-            return user;
+            catch (UnauthorizedAccessException e)
+            {
+                return Unauthorized(e.Message);
+            }
+            
         }
     }
 }

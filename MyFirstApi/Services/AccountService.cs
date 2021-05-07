@@ -16,6 +16,7 @@ namespace MyFirstApi.Services
         {
             _context = context;
         }
+
         public async Task<AppUser> RegisterAsync(string userName, string password)
         {
             //keep this code for future references
@@ -37,5 +38,24 @@ namespace MyFirstApi.Services
 
             return await _context.Users.AnyAsync(x => x.Name == userName.ToLower());
         }
+        public async Task<AppUser> LoginAsync(string name, string password)
+        {
+            AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.Name == name);
+            if (user == null)
+            {
+                throw new UnauthorizedAccessException("Invalid username.");
+            }
+
+            using var hmac = new HMACSHA512();
+            var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(password));
+
+            if (hash != user.PasswordHash)
+            {
+                throw new UnauthorizedAccessException("Invalid password.");
+            }
+
+            return user;
+        }
+        
     }
 }
