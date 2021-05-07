@@ -27,7 +27,8 @@ namespace MyFirstApi.Controllers
         {
             if (await _service.UserExists(dto.Name))
             {
-
+                //BadRequest is a part of ActionResult
+                return BadRequest("Username already exists");
             }
             var user = await _service.RegisterAsync(dto.Name, dto.Password);
             return user;
