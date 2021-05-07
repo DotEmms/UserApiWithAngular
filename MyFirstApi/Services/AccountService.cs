@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,11 +31,12 @@ namespace MyFirstApi.Services
 
             return user;
         }
+
         public async Task<bool> UserExists(string userName)
         {
-
             return await _context.Users.AnyAsync(x => x.Name == userName.ToLower());
         }
+
         public async Task<AppUser> LoginAsync(string name, string password)
         {
             AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.Name == name);
@@ -51,14 +50,12 @@ namespace MyFirstApi.Services
             for (int i = 0; i < hash.Length; i++)
             {
                 if (hash[i] != user.PasswordHash[i])
-                            {
-                                throw new UnauthorizedAccessException("Invalid password.");
-                            }
+                {
+                    throw new UnauthorizedAccessException("Invalid password.");
+                }
             }
-            
 
             return user;
         }
-        
     }
 }
