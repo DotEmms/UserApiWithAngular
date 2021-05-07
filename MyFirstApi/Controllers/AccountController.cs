@@ -19,7 +19,15 @@ namespace MyFirstApi.Controllers
         {
             _service = service;
         }
-        [HttpPost]
+
+        [HttpPost("Register")]
+
+        public async Task<AppUser> RegisterAsync(string name, string password)
+        {
+            var user = await _service.RegisterAsync(name, password);
+            return user;
+        }
+
 
 
     }
