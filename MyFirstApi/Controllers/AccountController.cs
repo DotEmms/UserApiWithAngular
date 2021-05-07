@@ -37,7 +37,13 @@ namespace MyFirstApi.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<AppUser>> LoginAsync(LoginDTO dto)
         {
+            if (!await _service.UserExists(dto.Name))
+            {
+                return Unauthorized("This username does not exist");
+            }
+            var user = await _service.LoginAsync(dto.Name, dto.Password);
 
+            return user;
         }
     }
 }
