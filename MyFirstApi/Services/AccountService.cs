@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyFirstApi.Services
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private MyFirstApiContext _context;
 

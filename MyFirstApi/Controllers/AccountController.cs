@@ -14,10 +14,13 @@ namespace MyFirstApi.Controllers
     
     public class AccountController : ControllerBase
     {
-        private AccountService _service;
-        public AccountController(AccountService service)
+        private IAccountService _service;
+        public AccountController(IAccountService service)
         {
             _service = service;
         }
+        [HttpPost]
+
+
     }
 }
