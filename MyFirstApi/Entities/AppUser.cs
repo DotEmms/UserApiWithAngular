@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyFirstApi.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace MyFirstApi
         public string City { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
         public DateTime LastModified { get; set; } = DateTime.Now;
+        public ICollection<Photo> Photos { get; set; }
 
     }
 }
