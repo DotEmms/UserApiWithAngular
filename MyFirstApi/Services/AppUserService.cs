@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyFirstApi.DTO;
+using MyFirstApi.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,11 @@ namespace MyFirstApi.Services
 {
     public class AppUserService : IAppUserService
     {
-        private MyFirstApiContext _context;
+        private IAppUserRepository _repo;
         private IMapper _mapper;
-        public AppUserService(MyFirstApiContext context, IMapper mapper)
+        public AppUserService(IAppUserRepository repo, IMapper mapper)
         {
-            _context = context;
+            _repo = repo;
             _mapper = mapper;
         }
         // => not needed anymore
@@ -29,34 +30,29 @@ namespace MyFirstApi.Services
 
         public async Task<List<AppUser>> GetUsersAsync()
         {
-            return await _context.Users.ToListAsync();
+            return await _repo.GetUsersAsync();
         }
         public async Task<AppUser> GetUserAsync(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _repo.GetUserAsync(id);
         }
 
         public async Task AddUserAsync(AppUser user)
         {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await _repo.AddUserAsync(user);
         }
 
         public async Task UpdateUserAsync(AppUser user)
         {
-            _context.Update(user);
-            await _context.SaveChangesAsync();
+            await _repo.UpdateUserAsync(user);
         }
         public async Task DeleteUserAsync(int id)
         {
-            var user = new AppUser { Id = id };
-            _context.Attach(user);
-            _context.Remove(user);
-            await _context.SaveChangesAsync();
+            await _repo.DeleteUserAsync(id);
         }
         public async Task<MemberDTO> GetMemberAsync(int id)
         {
-            AppUser user = await GetUserAsync(id);
+            AppUser user = await _repo.GetUserAsync(id);
             MemberDTO member = _mapper.Map<MemberDTO>(user);
             return member;
         }
