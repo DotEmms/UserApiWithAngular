@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyFirstApi.DTO;
 using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,13 @@ namespace MyFirstApi.Controllers
         public async Task DeleteAsync(int id)
         {
             await _service.DeleteUserAsync(id);
+        }
+
+        [HttpGet("Member")]
+        public async Task<ActionResult<MemberDTO>> GetMemberAsync(int id)
+        {
+            MemberDTO member = await _service.GetMemberAsync(id);
+            return member;
         }
     }
 }
