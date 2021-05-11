@@ -17,10 +17,13 @@ export class NavigationComponent implements OnInit {
     this.accountService.login(this.model)
     .subscribe(x => {
       this.loggedIn = true;
-      console.log(x);
     }, error =>{
       console.log(error);
     })
+  }
+  logout(): void {
+    this.accountService.logout();
+    this.loggedIn = false;
   }
 
 }
