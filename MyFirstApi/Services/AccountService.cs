@@ -17,7 +17,7 @@ namespace MyFirstApi.Services
             _repo = repo;
         }
 
-        public async Task<AppUser> RegisterAsync(string userName, string password)
+        public async Task<UserDTO> RegisterAsync(string userName, string password)
         {
             return await _repo.RegisterAsync(userName, password);
         }
@@ -27,7 +27,7 @@ namespace MyFirstApi.Services
             return await _repo.UserExists(userName);
         }
 
-        public async Task<AppUser> LoginAsync(string name, string password)
+        public async Task<UserDTO> LoginAsync(string name, string password)
         {
             return await _repo.LoginAsync(name, password);
         }

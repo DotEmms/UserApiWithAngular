@@ -23,7 +23,7 @@ namespace MyFirstApi.Controllers
 
         [HttpPost("Register")]
         //ActionResult, gives you a non-generic result
-        public async Task<ActionResult<AppUser>> RegisterAsync(RegisterDTO dto)
+        public async Task<ActionResult<UserDTO>> RegisterAsync(RegisterDTO dto)
         {
             if (await _service.UserExists(dto.Name))
             {
@@ -35,7 +35,7 @@ namespace MyFirstApi.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<AppUser>> LoginAsync(LoginDTO dto)
+        public async Task<ActionResult<UserDTO>> LoginAsync(LoginDTO dto)
         {
             //this happens in AccountService, so not needed anymore
             //if (!await _service.UserExists(dto.Name))
@@ -44,7 +44,7 @@ namespace MyFirstApi.Controllers
             //}
             try
             {
-                AppUser user = await _service.LoginAsync(dto.Name, dto.Password);
+                UserDTO user = await _service.LoginAsync(dto.Name, dto.Password);
                 return user;
             }
             catch (UnauthorizedAccessException e)

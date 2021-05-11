@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyFirstApi.DTO;
+using MyFirstApi.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +13,15 @@ namespace MyFirstApi.Repositories
     public class AccountRepository : IAccountRepository
     {
         private MyFirstApiContext _context;
-        public AccountRepository(MyFirstApiContext context)
+        private ITokenService _tokenService;
+        public AccountRepository(MyFirstApiContext context, ITokenService tokenService)
         {
             _context = context;
+            _tokenService = tokenService;
+
         }
 
-        public async Task<AppUser> RegisterAsync(string userName, string password)
+        public async Task<UserDTO> RegisterAsync(string userName, string password)
         {
             //keep this code for future references
             using var hmac = new HMACSHA512();
@@ -30,7 +35,11 @@ namespace MyFirstApi.Repositories
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return user;
+            return new UserDTO
+            {
+                UserName = user.Name,
+                Token = _tokenService.CreateToken(user),
+            };
         }
 
         public async Task<bool> UserExists(string userName)
@@ -38,7 +47,7 @@ namespace MyFirstApi.Repositories
             return await _context.Users.AnyAsync(x => x.Name == userName.ToLower());
         }
 
-        public async Task<AppUser> LoginAsync(string name, string password)
+        public async Task<UserDTO> LoginAsync(string name, string password)
         {
             AppUser user = await _context.Users.SingleOrDefaultAsync(x => x.Name == name);
             if (user == null)
@@ -56,7 +65,11 @@ namespace MyFirstApi.Repositories
                 }
             }
 
-            return user;
+            return new UserDTO
+            {
+                UserName = user.Name,
+                Token = _tokenService.CreateToken(user),
+            };
         }
     }
 }
