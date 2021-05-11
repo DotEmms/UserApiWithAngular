@@ -10,9 +10,9 @@ namespace MyFirstApi.Services
 {
     public class AccountService : IAccountService
     {
-        private AccountRepository _repo;
+        private IAccountRepository _repo;
 
-        public AccountService(AccountRepository repo)
+        public AccountService(IAccountRepository repo)
         {
             _repo = repo;
         }

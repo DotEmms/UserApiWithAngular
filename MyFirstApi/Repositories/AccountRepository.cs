@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyFirstApi.Repositories
 {
-    public class AccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private MyFirstApiContext _context;
         public AccountRepository(MyFirstApiContext context)
