@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using AutoMapper;
+using Moq;
+using MyFirstApi.Helpers;
+using MyFirstApi.Repositories;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +13,13 @@ namespace MyFirstApi.Tests
 {
     class AccountServiceTests
     {
-        //private Mock<IAppUserRepository> mockRepo;
-        //private MapperConfiguration config;
+        private Mock<IAccountRepository> mockRepo;
+        private MapperConfiguration config;
         [SetUp]
         public void Setup()
         {
-            //mockRepo = new Mock<IAppUserRepository>();
-            //config = new MapperConfiguration(x => x.AddProfile<AutoMapperProfile>());
+            mockRepo = new Mock<IAccountRepository>();
+            config = new MapperConfiguration(x => x.AddProfile<AutoMapperProfile>());
         }
 
         [Test]
