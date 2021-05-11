@@ -44,6 +44,7 @@ namespace MyFirstApi
             //Dependency Injection Config
             services.AddScoped<IAppUserService, AppUserService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAppUserRepository, AppUserRepository>();
             //AutoMapper
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
