@@ -9,9 +9,10 @@ import { AccountService } from '../account.service';
 })
 export class RegisterComponent implements OnInit {
   registerUser: FormGroup = new FormGroup({
-    username: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]),
-  })
+  });
+  validationErrors: string[] = [];
   
   constructor(private accountService: AccountService) { }
 
@@ -20,5 +21,11 @@ export class RegisterComponent implements OnInit {
 
   register(){
     console.log(this.registerUser.value);
+    this.accountService.register(this.registerUser.value).subscribe(response =>{
+
+    }, error => {
+      console.log(error);
+      this.validationErrors.push(error.errors).toString;
+    });
   }
 }

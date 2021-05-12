@@ -13,6 +13,11 @@ export class AccountService {
  
   constructor(private http: HttpClient) { }
 
+  register(model : any): Observable<any>{
+    let url = `${this.baseUrl}/register`;
+    return this.http.post( url , model );
+  }
+
   login(model: any): Observable<any>{
     let url = `${this.baseUrl}/login`;
 
