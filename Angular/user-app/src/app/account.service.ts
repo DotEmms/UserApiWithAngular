@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from './user';
+import { Login } from './login';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class AccountService {
   baseUrl = 'https://localhost:44302/api/Account';
-  currentUser?: User;
+  currentUser?: Login;
   // httpOptions = {
   //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   // };  
@@ -31,7 +31,7 @@ export class AccountService {
       );
   }
 
-  setCurrentUser(user: User){
+  setCurrentUser(user: Login){
     this.currentUser = user;
   }
 
