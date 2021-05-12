@@ -10,9 +10,7 @@ import { map } from 'rxjs/operators';
 export class AccountService {
   baseUrl = 'https://localhost:44302/api/Account';
   currentUser?: Login;
-  // httpOptions = {
-  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  // };  
+ 
   constructor(private http: HttpClient) { }
 
   login(model: any): Observable<any>{
