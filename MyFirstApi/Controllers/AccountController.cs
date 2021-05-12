@@ -31,7 +31,7 @@ namespace MyFirstApi.Controllers
                 return BadRequest("Username already exists.");
             }
             var user = await _service.RegisterAsync(dto.Name, dto.Password);
-            return user;
+            return Created("",user);
         }
 
         [HttpPost("Login")]
@@ -45,7 +45,7 @@ namespace MyFirstApi.Controllers
             try
             {
                 UserDTO user = await _service.LoginAsync(dto.Name, dto.Password);
-                return user;
+                return Ok(user);
             }
             catch (UnauthorizedAccessException e)
             {

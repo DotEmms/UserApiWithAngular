@@ -24,21 +24,24 @@ namespace MyFirstApi.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IEnumerable<AppUser>> GetAsync()
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetAsync()
         {
-            return await _service.GetUsersAsync();
+            var result = await _service.GetUsersAsync();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<AppUser> GetUserAsync(int id)
+        public async Task<ActionResult<AppUser>> GetUserAsync(int id)
         {
-            return await _service.GetUserAsync(id);
+            var result = await _service.GetUserAsync(id);
+            return Ok(result);
         }
 
         [HttpPost]
-        public async Task AddAsync(AppUser user)
+        public async Task<ActionResult> AddAsync(AppUser user)
         {
             await _service.AddUserAsync(user);
+            return Created("", null);
         }
 
         [HttpPut]
@@ -53,11 +56,17 @@ namespace MyFirstApi.Controllers
             await _service.DeleteUserAsync(id);
         }
 
-        [HttpGet("Member")]
+        [HttpGet("Members/{id}")]
         public async Task<ActionResult<MemberDTO>> GetMemberAsync(int id)
         {
             MemberDTO member = await _service.GetMemberAsync(id);
-            return member;
+            return Ok(member);
+        }
+        [HttpGet("Members")]
+        public async Task<ActionResult<ICollection<MemberDTO>>> GetMembersAsync()
+        {
+            ICollection<MemberDTO> members = await _service.GetMembersAsync();
+            return Ok(members);
         }
     }
 }
